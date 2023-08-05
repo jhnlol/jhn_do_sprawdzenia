@@ -83,7 +83,7 @@ AddEventHandler('playerConnecting', function()
     Main.sprawdzanie(dcid, source)
 end)
 local id_kanalu = '1131232652771475466'
-local token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GhQ45e.4eDyAawZUKT4lUycy11p2z9_DlQL5sGg3G3yqs'
+local token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
 function ExecuteCOMM(command)
     if string.starts(command, '!') then
         -- ... (existing code)
