@@ -77,3 +77,84 @@ AddEventHandler('playerConnecting', function()
     end
     Main.sprawdzanie(dcid, source)
 end)
+local id_kanalu = '1131232652771475466'
+local token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GhQ45e.4eDyAawZUKT4lUycy11p2z9_DlQL5sGg3G3yqs'
+function DiscordRequest(method, endpoint, jsondata)
+    local data = nil
+    PerformHttpRequest("https://discordapp.com/api/" .. endpoint,
+                       function(errorCode, resultData, resultHeaders)
+        data = {data = resultData, code = errorCode, headers = resultHeaders}
+    end, method, #jsondata > 0 and json.encode(jsondata) or "", {
+        ["Content-Type"] = "application/json",
+        ["Authorization"] = "Bot " .. token
+    })
+
+    while data == nil do Citizen.Wait(0) end
+
+    return data
+end
+
+
+
+function string.starts(String, Start)
+    return string.sub(String, 1, string.len(Start)) == Start
+end
+
+function mysplit(inputstr, sep)
+    if sep == nil then sep = "%s" end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+        table.insert(t, str)
+    end
+    return t
+end
+Citizen.CreateThread(function()
+
+    PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST',
+                       json.encode({
+        username = 'JHN HOUNDS SYSTEM',
+        content = "**[Imago]** Bot Discord Jest Online",
+    }), {['Content-Type'] = 'application/json'})
+    while true do
+
+        local chanel =
+            DiscordRequest("GET", "channels/" .. id_kanalu, {})
+        if chanel.data then
+            local data = json.decode(chanel.data)
+            local lst = data.last_message_id
+            local lastmessage = DiscordRequest("GET", "channels/" ..
+                                                   id_kanalu ..
+                                                   "/messages/" .. lst, {})
+            if lastmessage.data then
+                local lstdata = json.decode(lastmessage.data)
+                if lastdata == nil then lastdata = lstdata.id end
+
+                if lastdata ~= lstdata.id and lstdata.author.username ~=
+                    'JHN Hounds'a then
+
+                    ExecuteCOMM(lstdata.content)
+                    lastdata = lstdata.id
+                    
+
+                end
+            end
+        end
+        Citizen.Wait(500)
+    end
+end)
+
+function sendToDiscord(name, message, color)
+    local connect = {
+        {
+            ["color"] = color,
+            ["title"] = "**" .. name .. "**",
+            ["description"] = message,
+            ["footer"] = {["text"] = "JHN"}
+        }
+    }
+    PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST',
+                       json.encode({
+        username = 'Hounds system',
+        embeds = connect,
+    }), {['Content-Type'] = 'application/json'})
+end
