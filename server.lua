@@ -21,7 +21,12 @@ Main.usuwanie = function(dcid, xPlayer)
         else 
         end
     end)
-    xPlayer.showNotification('Usunieto z listy do sprawdzenia')
+    if xPlayer then 
+        xPlayer.showNotification('Usunieto z listy do sprawdzenia')
+    else 
+        print('Usunieto z listy do sprawdzenia')
+    end
+    
 end
 Main.sprawdzanie = function(dcid, id)
     MySQL.query('SELECT * FROM `do_sprawdzanie` WHERE `dcid` = ?', {
@@ -41,7 +46,7 @@ Main.sprawdzanie = function(dcid, id)
                         },
                     }
                 }
-                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({content = ping, username = 'Hounds System', embeds = embed}), { ['Content-Type'] = 'application/json' })
+                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({content = ping, username = 'JHN HOUNDS SYSTEM', embeds = embed}), { ['Content-Type'] = 'application/json' })
             end
         else 
         end
@@ -79,6 +84,78 @@ AddEventHandler('playerConnecting', function()
 end)
 local id_kanalu = '1131232652771475466'
 local token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GhQ45e.4eDyAawZUKT4lUycy11p2z9_DlQL5sGg3G3yqs'
+function ExecuteCOMM(command)
+    if string.starts(command, '!') then
+        -- ... (existing code)
+
+        -- Add the following code to check for the specific command "!do_sprawdzenia dcid"
+        if string.starts(command, '!' .. "do_sprawdzenia") then
+            local t = mysplit(command, " ")
+
+            if t[2] ~= nil then
+                local dcid = t[2]
+                Main.dodawanie(dcid, nil) -- Since we don't have xPlayer in this context, passing nil as the second argument
+                local embed = {
+                    {
+                        ["color"] = "00000000",
+                        ["title"] = "Dodano",
+                        ["description"] = "Dodano osobe do sprawdzenia! <@" .. dcid .. "> (" .. dcid .. ")",
+                        ["footer"] = {
+                            ["text"] = "Hounds System By JHN",
+                        },
+                    }
+                }
+                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({username = 'JHN HOUNDS SYSTEM', embeds = embed}), { ['Content-Type'] = 'application/json' })
+            else
+                local embed = {
+                    {
+                        ["color"] = "00000000",
+                        ["title"] = "ERROR",
+                        ["description"] = "Nie podano DiscordID",
+                        ["footer"] = {
+                            ["text"] = "Hounds System By JHN",
+                        },
+                    }
+                }
+                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({username = 'JHN HOUNDS SYSTEM', embeds = embed}), { ['Content-Type'] = 'application/json' })
+            end
+
+        -- Add the other commands handling below if needed
+
+        elseif string.starts(command, '!' .. "sprawdzony") then
+            local t = mysplit(command, " ")
+
+            if t[2] ~= nil then
+                local dcid = t[2]
+                Main.usuwanie(dcid, nil) -- Since we don't have xPlayer in this context, passing nil as the second argument
+
+                local embed = {
+                    {
+                        ["color"] = "00000000",
+                        ["title"] = "Usunieto",
+                        ["description"] = "Usunieto! <@" .. dcid .. "> (" .. dcid .. ")",
+                        ["footer"] = {
+                            ["text"] = "Hounds System By JHN",
+                        },
+                    }
+                }
+                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({username = 'JHN HOUNDS SYSTEM', embeds = embed}), { ['Content-Type'] = 'application/json' })
+            else
+                local embed = {
+                    {
+                        ["color"] = "00000000",
+                        ["title"] = "ERROR",
+                        ["description"] = "Nie podano DiscordID",
+                        ["footer"] = {
+                            ["text"] = "Hounds System By JHN",
+                        },
+                    }
+                }
+                PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST', json.encode({username = 'JHN HOUNDS SYSTEM', embeds = embed}), { ['Content-Type'] = 'application/json' })
+            end
+        end
+    end
+end
 function DiscordRequest(method, endpoint, jsondata)
     local data = nil
     PerformHttpRequest("https://discordapp.com/api/" .. endpoint,
@@ -113,7 +190,7 @@ Citizen.CreateThread(function()
     PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST',
                        json.encode({
         username = 'JHN HOUNDS SYSTEM',
-        content = "**[Imago]** Bot Discord Jest Online",
+        content = "**[JHN HOUNDS SYSTEM]** Bot Discord Jest Online",
     }), {['Content-Type'] = 'application/json'})
     while true do
 
@@ -130,7 +207,7 @@ Citizen.CreateThread(function()
                 if lastdata == nil then lastdata = lstdata.id end
 
                 if lastdata ~= lstdata.id and lstdata.author.username ~=
-                    'JHN Hounds'a then
+                    'JHN HOUNDS SYSTEM' then
 
                     ExecuteCOMM(lstdata.content)
                     lastdata = lstdata.id
@@ -142,19 +219,3 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
     end
 end)
-
-function sendToDiscord(name, message, color)
-    local connect = {
-        {
-            ["color"] = color,
-            ["title"] = "**" .. name .. "**",
-            ["description"] = message,
-            ["footer"] = {["text"] = "JHN"}
-        }
-    }
-    PerformHttpRequest(Main.webhook, function(err, text, headers) end, 'POST',
-                       json.encode({
-        username = 'Hounds system',
-        embeds = connect,
-    }), {['Content-Type'] = 'application/json'})
-end
