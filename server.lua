@@ -2,6 +2,7 @@ local Main = {
     webhook = "https://canary.discord.com/api/webhooks/1133305328906280960/5qXI1RB2_ekAKVAi0j-Dv2iL6OsrnHNnI_gvglE132xwMuaa8WVCmsDDkqJAx9ZS7EIF",
     hounds_role = "xx"
 }
+ESX = exports["es_extended"]:getSharedObject()
 Main.dodawanie = function(dcid, xPlayer) 
     MySQL.insert('INSERT INTO do_sprawdzanie (dcid) VALUES (?)',
     {dcid})
@@ -46,7 +47,6 @@ Main.sprawdzanie = function(dcid, id)
         end
     end)
 end
-ESX = exports["es_extended"]:getSharedObject()
 ESX.RegisterCommand('do_sprawdzenia', {'best', 'mod', 'admin', 'superadmin'}, function(xPlayer, args, showError)
     if args.dcid then 
         Main.dodawanie(args.dcid, xPlayer)
