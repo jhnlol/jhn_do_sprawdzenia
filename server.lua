@@ -1,6 +1,8 @@
 local Main = {
     webhook = "https://canary.discord.com/api/webhooks/1133305328906280960/5qXI1RB2_ekAKVAi0j-Dv2iL6OsrnHNnI_gvglE132xwMuaa8WVCmsDDkqJAx9ZS7EIF",
-    hounds_role = "xx"
+    hounds_role = "xx",
+    id_kanalu = "1131232652771475466",
+    token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
 }
 ESX = exports["es_extended"]:getSharedObject()
 Main.dodawanie = function(dcid, xPlayer) 
@@ -82,8 +84,7 @@ AddEventHandler('playerConnecting', function()
     end
     Main.sprawdzanie(dcid, source)
 end)
-local id_kanalu = '1131232652771475466'
-local token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
+
 function ExecuteCOMM(command)
     if string.starts(command, '!') then
         -- ... (existing code)
@@ -163,7 +164,7 @@ function DiscordRequest(method, endpoint, jsondata)
         data = {data = resultData, code = errorCode, headers = resultHeaders}
     end, method, #jsondata > 0 and json.encode(jsondata) or "", {
         ["Content-Type"] = "application/json",
-        ["Authorization"] = "Bot " .. token
+        ["Authorization"] = "Bot " .. Main.token
     })
 
     while data == nil do Citizen.Wait(0) end
@@ -195,12 +196,12 @@ Citizen.CreateThread(function()
     while true do
 
         local chanel =
-            DiscordRequest("GET", "channels/" .. id_kanalu, {})
+            DiscordRequest("GET", "channels/" .. Main.id_kanalu, {})
         if chanel.data then
             local data = json.decode(chanel.data)
             local lst = data.last_message_id
             local lastmessage = DiscordRequest("GET", "channels/" ..
-                                                   id_kanalu ..
+            Main.id_kanalu ..
                                                    "/messages/" .. lst, {})
             if lastmessage.data then
                 local lstdata = json.decode(lastmessage.data)
@@ -216,6 +217,6 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        Citizen.Wait(500)
+        Wait(500)
     end
 end)
