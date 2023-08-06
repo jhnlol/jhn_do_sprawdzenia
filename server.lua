@@ -3,7 +3,6 @@ local Main = {
     hounds_role = "xx",
     id_kanalu = "1131232652771475466",
     token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
-    webhook = "",
     hounds_role = "xx"
 }
 ESX = exports["es_extended"]:getSharedObject()
