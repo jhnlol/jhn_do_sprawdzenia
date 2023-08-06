@@ -1,13 +1,10 @@
 local Main = {
-<<<<<<< HEAD
     webhook = "https://canary.discord.com/api/webhooks/1133305328906280960/5qXI1RB2_ekAKVAi0j-Dv2iL6OsrnHNnI_gvglE132xwMuaa8WVCmsDDkqJAx9ZS7EIF",
     hounds_role = "xx",
     id_kanalu = "1131232652771475466",
     token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
-=======
     webhook = "",
     hounds_role = "xx"
->>>>>>> 9977f3e36f64f4d64c9d40cae1e2a9b5fbeadda1
 }
 ESX = exports["es_extended"]:getSharedObject()
 Main.dodawanie = function(dcid, xPlayer) 
@@ -89,12 +86,7 @@ AddEventHandler('playerConnecting', function()
     end
     Main.sprawdzanie(dcid, source)
 end)
-<<<<<<< HEAD
 
-=======
-local id_kanalu = '1131232652771475466'
-local token = ''
->>>>>>> 9977f3e36f64f4d64c9d40cae1e2a9b5fbeadda1
 function ExecuteCOMM(command)
     if string.starts(command, '!') then
         -- ... (existing code)
