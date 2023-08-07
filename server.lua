@@ -2,7 +2,7 @@ local Main = {
     webhook = "https://canary.discord.com/api/webhooks/1133305328906280960/5qXI1RB2_ekAKVAi0j-Dv2iL6OsrnHNnI_gvglE132xwMuaa8WVCmsDDkqJAx9ZS7EIF",
     hounds_role = "xx",
     id_kanalu = "1131232652771475466",
-    token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY'
+    token = 'MTEyNjc4NDg4MTQ2OTQzMTg4OQ.GG0XwW.DtJ3Nq-nYsGXpOKGcECP0ydwWcq8GDwcyYkShY',
     hounds_role = "xx"
 }
 ESX = exports["es_extended"]:getSharedObject()
